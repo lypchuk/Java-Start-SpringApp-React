@@ -2,7 +2,7 @@ import * as React from "react";
 import {useForm} from "antd/es/form/Form";
 import {ICategoryCreate} from "./types.ts";
 import {Button, Form, Input, Modal, Row, Upload, UploadFile} from "antd";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import TextArea from "antd/es/input/TextArea";
 import {useState} from "react";
 import {RcFile, UploadChangeParam} from "antd/es/upload";
@@ -12,13 +12,15 @@ import axios from "axios";
 const CategoryCreatePage : React.FC = () => {
     const [form] = useForm<ICategoryCreate>();
 
+    const navigate = useNavigate()
     const [previewOpen, setPreviewOpen] = useState<boolean>(false);
     const [previewImage, setPreviewImage] = useState('');
     const [previewTitle, setPreviewTitle] = useState('');
 
     const onSubmitForm = async (values: ICategoryCreate) => {
         //console.log("Create category data", values);
-        const url ="http://localhost:8889/api/category";
+        const url = `${import.meta.env.VITE_REACT_APP_JAVA_API}api/rest/category`;
+        //const url ="http://localhost:8889/api/rest/category";
         try {
             const id = await axios.post<number>(url, values,
                 {
@@ -31,6 +33,7 @@ const CategoryCreatePage : React.FC = () => {
         catch(e) {
             console.log("Error", e);
         }
+         navigate(-1);
     }
 
     return (
@@ -55,6 +58,8 @@ const CategoryCreatePage : React.FC = () => {
                         >
                             <Input autoComplete={"name"} />
                         </Form.Item>
+
+
 
                         <Form.Item
                             label="Оберіть фото"
@@ -106,7 +111,7 @@ const CategoryCreatePage : React.FC = () => {
                         <Row style={{display: 'flex', justifyContent: 'center'}}>
                             <Button style={{margin: 10}}
                                     className={"text-white capitalize transition-colors duration-300 transform bg-blue-500"}
-                                    type="primary" htmlType="submit">
+                                    type="primary" htmlType="submit" >
                                 Додати
                             </Button>
 

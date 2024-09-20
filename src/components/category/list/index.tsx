@@ -6,15 +6,19 @@ import axios from "axios";
 import {Image, List, Skeleton, Space, Table, TableColumnsType} from "antd";
 import Column from "antd/es/table/Column";
 
+
 function CategoryListPage(props) {
     const [data, setData] = useState<ICategoryItem[]>([]);
 
     const { id } = useParams<{ id: string }>();
 
 
+    const urlApi = `${import.meta.env.VITE_REACT_APP_JAVA_API}api/rest/category/getAllCategories`;
+
     useEffect(() => {
         // axios.get<ICategoryItem[]>("http://localhost:8000/api/products?categoryId="+id)
-        axios.get<ICategoryItem[]>("http://localhost:8889/api/rest/category/getAllCategories")
+        //axios.get<ICategoryItem[]>("http://localhost:8889/api/rest/category/getAllCategories")
+        axios.get<ICategoryItem[]>(urlApi)
             .then(resp => {
                 console.log("list categories", resp.data);
                 setData(resp.data);
@@ -90,7 +94,7 @@ function CategoryListPage(props) {
                         title="Image"
                         key="image"
                         render={(_: any, record: ICategoryItem) => (
-                            <Image src={'http://localhost:8889/uploadImages/300_' + record.image} alt={record.image} height={120} width={120}/>
+                            <Image src={import.meta.env.VITE_REACT_APP_JAVA_API + 'uploadImages/300_' + record.image} alt={record.image} height={120} width={120}/>
                         )}
                     />
 
@@ -99,14 +103,15 @@ function CategoryListPage(props) {
                         key="action"
                         render={(_: any, record: ICategoryItem) => (
                             <Space size="middle">
-                                <a>Edite</a>
-                                <a>Delete</a>
+                                {/*<a href={import.meta.env.VITE_REACT_APP_JAVA_API + "api/rest/category/edit/" + record.id}>Edite</a>*/}
+                                <Link to={`../updatecategory/${record.id}`}>Edite</Link>
+                                <a href={import.meta.env.VITE_REACT_APP_JAVA_API + "api/rest/category/delete/" + record.id}>Delete</a>
                             </Space>
                         )}
                     />
                 </Table>
 
-                <Link to={"/products/create"}>
+                <Link to={"/addcategory"}>
                     <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                         Додати
                     </button>

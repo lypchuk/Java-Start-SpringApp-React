@@ -28,13 +28,13 @@ function MyHeader(props) {
                                     </a>
 
                                     <div className="hidden  ml-4 lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                                        <a href="allcategories" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                        <a href="../allcategories" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                             Categories
                                         </a>
 
                                         <span aria-hidden="true" className="h-6 w-px bg-gray-200" />
 
-                                        <a href="allproducts" className="text-sm font-medium text-gray-700 hover:text-gray-800">
+                                        <a href="../allproducts" className="text-sm font-medium text-gray-700 hover:text-gray-800">
                                             Products
                                         </a>
                                     </div>
